@@ -19,4 +19,4 @@ Libraries: numpy, pandas, geopandas, sklearn, seaborn, matplolib
 
 ## Machine learning approach
 
-- The given problem was solved by using **the scikit-learn RandomForestRegressor**. The result is in the [Poland apartments - price predicting.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/Poland%20apartments%20-%20price%20predicting.ipynb) file.
+- The given problem was solved by using **the scikit-learn RandomForestRegressor**. The result is in the [Poland_apartments_main.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/Poland_apartments_main.ipynb) file.
