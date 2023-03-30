@@ -1,4 +1,4 @@
-# Price Predicting for Poland Apartments
+# Price Predicting for Polish Apartments
 
 Predicting the price of apartment by its features (square, floor, district, distance from the center of the city, number of rooms, year of construction)
 
