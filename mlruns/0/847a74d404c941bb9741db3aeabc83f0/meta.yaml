@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/847a74d404c941bb9741db3aeabc83f0/artifacts
+end_time: 1685621993894
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 847a74d404c941bb9741db3aeabc83f0
+run_name: dapper-panda-224
+run_uuid: 847a74d404c941bb9741db3aeabc83f0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685621993584
+status: 4
+tags: []
+user_id: user

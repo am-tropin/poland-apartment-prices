@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/f04ee2f1a1e1410bba70c356644901fb/artifacts
+end_time: 1685623215613
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f04ee2f1a1e1410bba70c356644901fb
+run_name: skittish-mouse-234
+run_uuid: f04ee2f1a1e1410bba70c356644901fb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685622677626
+status: 4
+tags: []
+user_id: user

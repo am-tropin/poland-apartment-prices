@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/fa67d3b165a4461599a7d8b3b2fd9ab7/artifacts
+end_time: 1685618421540
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fa67d3b165a4461599a7d8b3b2fd9ab7
+run_name: wistful-croc-203
+run_uuid: fa67d3b165a4461599a7d8b3b2fd9ab7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685618421526
+status: 4
+tags: []
+user_id: user

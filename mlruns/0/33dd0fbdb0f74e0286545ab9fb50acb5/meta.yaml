@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/33dd0fbdb0f74e0286545ab9fb50acb5/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 33dd0fbdb0f74e0286545ab9fb50acb5
+run_name: auspicious-frog-368
+run_uuid: 33dd0fbdb0f74e0286545ab9fb50acb5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685623969543
+status: 1
+tags: []
+user_id: user

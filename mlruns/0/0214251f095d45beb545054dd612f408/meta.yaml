@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/0214251f095d45beb545054dd612f408/artifacts
+end_time: 1685619443197
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0214251f095d45beb545054dd612f408
+run_name: luminous-mouse-829
+run_uuid: 0214251f095d45beb545054dd612f408
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685619443174
+status: 4
+tags: []
+user_id: user

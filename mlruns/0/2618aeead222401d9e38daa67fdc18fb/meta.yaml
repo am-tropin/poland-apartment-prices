@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/2618aeead222401d9e38daa67fdc18fb/artifacts
+end_time: 1685619481637
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2618aeead222401d9e38daa67fdc18fb
+run_name: salty-duck-57
+run_uuid: 2618aeead222401d9e38daa67fdc18fb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685619479025
+status: 4
+tags: []
+user_id: user
