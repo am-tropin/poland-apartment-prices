@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0/b04b89b07a254671867f162b584e22cf/artifacts
+end_time: 1685626511703
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b04b89b07a254671867f162b584e22cf
+run_name: unruly-hawk-196
+run_uuid: b04b89b07a254671867f162b584e22cf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685626509735
+status: 3
+tags: []
+user_id: user
