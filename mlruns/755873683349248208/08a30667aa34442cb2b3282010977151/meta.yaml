@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/755873683349248208/08a30667aa34442cb2b3282010977151/artifacts
+end_time: 1685722511809
+entry_point_name: ''
+experiment_id: '755873683349248208'
+lifecycle_stage: active
+run_id: 08a30667aa34442cb2b3282010977151
+run_name: Run 8
+run_uuid: 08a30667aa34442cb2b3282010977151
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1685722509609
+status: 3
+tags: []
+user_id: user
