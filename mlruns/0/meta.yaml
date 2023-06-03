@@ -1,6 +1,6 @@
-artifact_location: file:///Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0
-creation_time: 1685618392784
+artifact_location: /Users/user/Documents/GitHub/poland-apartment-prices/mlruns/0
+creation_time: 1685782266498
 experiment_id: '0'
-last_update_time: 1685618392784
+last_update_time: 1685782266498
 lifecycle_stage: active
 name: Default
