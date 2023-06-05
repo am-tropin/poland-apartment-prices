@@ -143,18 +143,6 @@ def show_feature_importances(model, col_names): # list(X_train) !!!!!!!
     return 1
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
 # # 2. For MLFlow tracking
 
 # In[ ]:
@@ -218,13 +206,11 @@ def training_loop(experiment, model_class, parameters, X_train_scaled, y_train, 
         if mlflow.active_run():
             mlflow.end_run()
 
-        # mlflow: track run
         with mlflow.start_run(run_name=f"Run {i}", experiment_id=experiment.experiment_id): # , experiment_id=experiment_id
 
             model = model_class(**run_parameters)
             model.fit(X_train_scaled, y_train)
 
-            # get evaluations scores
             score = mean_squared_error(y_test, model.predict(X_test_scaled), squared=False)
 #             print("RMSE score: {:.4f}".format(score))
 #             score_cv = rmsle_cv_score(model, X_train_scaled, y_train)
@@ -284,12 +270,6 @@ def experiment_initialization(experiment_name):
 
     # create model_artifacts directory 
     # !mkdir -p "model_artifacts"
-
-
-# In[ ]:
-
-
-
 
 
 # # 3. For predicting by input data with the best model
@@ -396,83 +376,6 @@ def input_to_df(city, district, radius, floor, rooms, sq, year):
 # In[ ]:
 
 
-def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_test_scaled, y_test):
-    
-    for col in cat_features:
-        X_check[col] = X_check[col].apply(lambda x: labels_dict[col][x])
-
-    X_check_scaled = st_scaler.transform(X_check)
-    y_check_pred_model = model.predict(X_check_scaled)
-    
-    score = model.score(X_test_scaled, y_test)
-    price_pred = np.round(y_check_pred_model[0])
-    print("With a probability of {0}%, the prise will be about {1:,.0f} PLN ".format(
-        round(score * 100, 1),
-        round(price_pred)
-    ))
-    
-    return price_pred, score
-
-
-# In[ ]:
-
-
-# def predicting_by_experiment(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test, cat_features, st_scaler, labels_dict):
-    
-#     full_model_params = {}
-    
-#     for reg, model_class in all_regressors.items():
-# #         print(f"{reg}:".upper())
-#         full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
-# #         print()
-        
-#     best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
-#     if len(best_run_df.index) == 0:
-#         raise Exception(f"Found no runs for experiment '{experiment_name}'")
-
-#     best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
-#     best_model_uri = f"{best_run.info.artifact_uri}/model"
-#     best_model = mlflow.sklearn.load_model(best_model_uri)
-
-# #     print(f"Run parameters: {best_run.data.tags['estimator_name']}")
-# #     print(f"Run parameters: {best_run.data.params}")
-# #     print("Run score: R2 = {:.4f}".format(best_run.data.metrics['R2']))
-    
-# #     model_name = best_run.data.tags['estimator_name']    
-# #     best_grid2 = {k: float(v) if '.' in v else int(v) for k, v in best_run.data.params.items()}
-# #     best_model2 = globals()[model_name](**best_grid2)
-# #     best_model2.fit(X_train_scaled, y_train)
-    
-#     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
-    
-#     price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
-    
-#     return price_pred, score
-
-
-# In[ ]:
-
-
-def select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test):
-    
-    full_model_params = {}
-    for reg, model_class in all_regressors.items():
-        full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
-    
-    best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
-    if len(best_run_df.index) == 0:
-        raise Exception(f"Found no runs for experiment '{experiment_name}'")
-    
-    best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
-    best_model_uri = f"{best_run.info.artifact_uri}/model"
-    best_model = mlflow.sklearn.load_model(best_model_uri)
-    
-    return best_model
-
-
-# In[ ]:
-
-
 def set_regressors():
 
     all_regressors = {
@@ -521,6 +424,47 @@ def set_regressors():
     return all_regressors, grids
 
 
+# In[ ]:
+
+
+def select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test):
+    
+    full_model_params = {}
+    for reg, model_class in all_regressors.items():
+        full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
+    
+    best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
+    if len(best_run_df.index) == 0:
+        raise Exception(f"Found no runs for experiment '{experiment_name}'")
+    
+    best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
+    best_model_uri = f"{best_run.info.artifact_uri}/model"
+    best_model = mlflow.sklearn.load_model(best_model_uri)
+    
+    return best_model
+
+
+# In[ ]:
+
+
+def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_test_scaled, y_test):
+    
+    for col in cat_features:
+        X_check[col] = X_check[col].apply(lambda x: labels_dict[col][x])
+
+    X_check_scaled = st_scaler.transform(X_check)
+    y_check_pred_model = model.predict(X_check_scaled)
+    
+    score = model.score(X_test_scaled, y_test)
+    price_pred = np.round(y_check_pred_model[0])
+    print("With a probability of {0}%, the price will be about {1:,.0f} PLN ".format(
+        round(score * 100, 1),
+        round(price_pred)
+    ))
+    
+    return price_pred, score
+
+
 # In[3]:
 
 
@@ -531,13 +475,17 @@ def main_predicting(city, district, radius, floor, rooms, sq, year):
     
     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
     price_df4, cat_features, num_features, target = load_data()
-    X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
     experiment = experiment_initialization("poland_apartments")
     all_regressors, grids = set_regressors()
+    
+    # run tracking UI in the background
+    get_ipython().system_raw("mlflow ui --port 5000 &")
+    
+    X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
     best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
     price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
     
-    return "With a probability of {0}%, the prise will be about {1:,.0f} PLN ".format(round(score * 100, 1), round(price_pred))
+    return "With a probability of {0}%, the price will be about {1:,.0f} PLN ".format(round(score * 100, 1), round(price_pred))
 
 
 # In[ ]:
@@ -550,4 +498,88 @@ def main_predicting(city, district, radius, floor, rooms, sq, year):
 
 
 
+
+
+# In[ ]:
+
+
+# def predicting_by_experiment(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test, cat_features, st_scaler, labels_dict):
+    
+#     full_model_params = {}
+    
+#     for reg, model_class in all_regressors.items():
+# #         print(f"{reg}:".upper())
+#         full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
+# #         print()
+        
+#     best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
+#     if len(best_run_df.index) == 0:
+#         raise Exception(f"Found no runs for experiment '{experiment_name}'")
+
+#     best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
+#     best_model_uri = f"{best_run.info.artifact_uri}/model"
+#     best_model = mlflow.sklearn.load_model(best_model_uri)
+
+# #     print(f"Run parameters: {best_run.data.tags['estimator_name']}")
+# #     print(f"Run parameters: {best_run.data.params}")
+# #     print("Run score: R2 = {:.4f}".format(best_run.data.metrics['R2']))
+    
+# #     model_name = best_run.data.tags['estimator_name']    
+# #     best_grid2 = {k: float(v) if '.' in v else int(v) for k, v in best_run.data.params.items()}
+# #     best_model2 = globals()[model_name](**best_grid2)
+# #     best_model2.fit(X_train_scaled, y_train)
+    
+#     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
+    
+#     price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
+    
+#     return price_pred, score
+
+
+# In[ ]:
+
+
+# def model_feature_importance(model):
+#     feature_importance = pd.DataFrame(
+#         model.feature_importances_,
+#         index=X_train_scaled, # X_train_scaled.columns
+#         columns=["Importance"],
+#     )
+
+#     # sort by importance
+#     feature_importance.sort_values(by="Importance", ascending=False, inplace=True)
+
+#     # plot
+#     plt.figure(figsize=(12, 8))
+#     sns.barplot(
+#         data=feature_importance.reset_index(),
+#         y="index",
+#         x="Importance",
+#     ).set_title("Feature Importance")
+#     # save image
+#     plt.savefig("model_artifacts/feature_importance.png", bbox_inches='tight')
+
+
+# In[ ]:
+
+
+# def model_permutation_importance(model):
+#     p_importance = permutation_importance(model, X_test_scaled, y_test, random_state=42, n_jobs=-1)
+
+#     # sort by importance
+#     sorted_idx = p_importance.importances_mean.argsort()[::-1]
+#     p_importance = pd.DataFrame(
+#         data=p_importance.importances[sorted_idx].T,
+#         columns=X_train.columns[sorted_idx]
+#     )
+
+#     # plot
+#     plt.figure(figsize=(12, 8))
+#     sns.barplot(
+#         data=p_importance,
+#         orient="h"
+#     ).set_title("Permutation Importance")
+
+#     # save image
+#     plt.savefig("model_artifacts/permutation_importance.png", bbox_inches="tight")
 
