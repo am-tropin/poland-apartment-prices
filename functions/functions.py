@@ -480,7 +480,7 @@ def main_predicting(city, district, radius, floor, rooms, sq, year):
     all_regressors, grids = set_regressors()
     
     # run tracking UI in the background
-    get_ipython().system_raw("mlflow ui --port 5000 &")
+#     get_ipython().system_raw("mlflow ui --port 5000 &")
     
     X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
     best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
