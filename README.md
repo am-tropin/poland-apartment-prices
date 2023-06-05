@@ -76,14 +76,21 @@ Or
 
 ## MLflow Tracking
 
-1. Clone the project:
+1. Start the MLflow UI:
 ```bash
   mlflow ui
 ```
 
-2. Go to the project directory:
+<!-- 2. Go to the project directory:
 ```bash
   mlflow ui --backend-store-uri /Users/user/Documents/GitHub/poland-apartment-prices/mlruns
+``` -->
+
+2. Go to web-browser
+```bash
+  http://127.0.0.1:5000/
 ```
+and choose **poland_apartments** experiment for comparing the models.
+
 
 
