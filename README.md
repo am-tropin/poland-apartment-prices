@@ -1,13 +1,21 @@
-# Price Predicting for Poland Apartments
+# Price Predicting for Apartments in Poland
 
 Predicting the price of apartment by its features (square, floor, district, distance from the center of the city, number of rooms, year of construction).
 
-Libraries: numpy, pandas, geopandas, sklearn, seaborn, matplolib
+Libraries: numpy, pandas, geopandas, sklearn, xgboost, seaborn, matplolib, itertools, mlflow, fastapi
+
+[![Code Climate][codeclimate-badge]][codeclimate-link]
+
+[codeclimate-badge]: https://codeclimate.com/github/am-tropin/anniversary-reminder.svg
+[codeclimate-link]: https://codeclimate.com/github/am-tropin/anniversary-reminder
+
 
 
 ## Table of contents
 - [Datasets](#datasets)
 - [Machine learning problem](#machine-learning-problem)
+- [Run locally](#run-locally)
+- [MLflow Tracking](#mlflow-tracking)
 
 
 ## Datasets
@@ -20,3 +28,62 @@ Libraries: numpy, pandas, geopandas, sklearn, seaborn, matplolib
 ## Machine learning problem
 
 - The given problem was solved by using **XGBoost Regressor**. It shows the best **R2-score (87%)** in comparison with other models: Linear Regression, Ridge, Lasso, Bagging Regressor, AdaBoost (by 65%), Decision Tree (77%), k-Nearest Neighbors (78%), Random Forest, Stacked Ensembles (by 83%) and Gradient Boosting (85%). Besides, the predictor of price by custom data (using XGBoost model) was built. The result is in the [Poland_apartments_main.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/Poland_apartments_main.ipynb) file.
+
+
+
+## Run locally
+
+1. Clone the project:
+```bash
+  git clone https://github.com/am-tropin/poland-apartment-prices
+```
+
+2. Go to the project directory:
+```bash
+  cd poland-apartment-prices
+```
+
+<!-- Create vitual enviroment and install dependencies
+```bash
+  virtualenv venv
+  source venv/bin/activate
+  pip install -r requirements.txt
+``` -->
+
+3. Start the server:
+```bash
+  uvicorn main:app --reload
+```
+
+4. Go to web-browser 
+```bash
+  http://127.0.0.1:8000/docs/
+```
+and use the following box:
+
+- **Get Main Predicting**: Type city and district names, distance from the center of the city, floor number and number of rooms, apartment square and year of construction.
+
+Or 
+
+5. Go to web-browser and use one the following types of links to get the same info in clear dictionary view:
+
+- 5.1.
+```bash
+  http://127.0.0.1:8000/price_predictor/Warszawa_Śródmieście_2_3_2_40_2000
+```
+
+
+
+## MLflow Tracking
+
+1. Clone the project:
+```bash
+  mlflow ui
+```
+
+2. Go to the project directory:
+```bash
+  mlflow ui --backend-store-uri /Users/user/Documents/GitHub/poland-apartment-prices/mlruns
+```
+
+
