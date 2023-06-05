@@ -6,8 +6,8 @@ Libraries: numpy, pandas, opendatasets, geopandas, geopy, sklearn, xgboost, mlxt
 
 [![Code Climate][codeclimate-badge]][codeclimate-link]
 
-[codeclimate-badge]: https://codeclimate.com/github/am-tropin/anniversary-reminder.svg
-[codeclimate-link]: https://codeclimate.com/github/am-tropin/anniversary-reminder
+[codeclimate-badge]: https://codeclimate.com/github/am-tropin/poland-apartment-prices.svg
+[codeclimate-link]: https://codeclimate.com/github/am-tropin/poland-apartment-prices
 
 
 
