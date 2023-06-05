@@ -417,37 +417,127 @@ def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_tes
 # In[ ]:
 
 
-def predicting_by_experiment(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test, cat_features, st_scaler, labels_dict):
+# def predicting_by_experiment(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test, cat_features, st_scaler, labels_dict):
+    
+#     full_model_params = {}
+    
+#     for reg, model_class in all_regressors.items():
+# #         print(f"{reg}:".upper())
+#         full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
+# #         print()
+        
+#     best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
+#     if len(best_run_df.index) == 0:
+#         raise Exception(f"Found no runs for experiment '{experiment_name}'")
+
+#     best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
+#     best_model_uri = f"{best_run.info.artifact_uri}/model"
+#     best_model = mlflow.sklearn.load_model(best_model_uri)
+
+# #     print(f"Run parameters: {best_run.data.tags['estimator_name']}")
+# #     print(f"Run parameters: {best_run.data.params}")
+# #     print("Run score: R2 = {:.4f}".format(best_run.data.metrics['R2']))
+    
+# #     model_name = best_run.data.tags['estimator_name']    
+# #     best_grid2 = {k: float(v) if '.' in v else int(v) for k, v in best_run.data.params.items()}
+# #     best_model2 = globals()[model_name](**best_grid2)
+# #     best_model2.fit(X_train_scaled, y_train)
+    
+#     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
+    
+#     price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
+    
+#     return price_pred, score
+
+
+# In[ ]:
+
+
+def select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test):
     
     full_model_params = {}
-    
     for reg, model_class in all_regressors.items():
-#         print(f"{reg}:".upper())
         full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
-#         print()
-        
+    
     best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
     if len(best_run_df.index) == 0:
         raise Exception(f"Found no runs for experiment '{experiment_name}'")
-
+    
     best_run = mlflow.get_run(best_run_df.at[0, 'run_id'])
     best_model_uri = f"{best_run.info.artifact_uri}/model"
     best_model = mlflow.sklearn.load_model(best_model_uri)
-
-#     print(f"Run parameters: {best_run.data.tags['estimator_name']}")
-#     print(f"Run parameters: {best_run.data.params}")
-#     print("Run score: R2 = {:.4f}".format(best_run.data.metrics['R2']))
     
-#     model_name = best_run.data.tags['estimator_name']    
-#     best_grid2 = {k: float(v) if '.' in v else int(v) for k, v in best_run.data.params.items()}
-#     best_model2 = globals()[model_name](**best_grid2)
-#     best_model2.fit(X_train_scaled, y_train)
+    return best_model
+
+
+# In[ ]:
+
+
+def set_regressors():
+
+    all_regressors = {
+    #     'linreg': LinearRegression,
+    #     'ridge': Ridge,
+    #     'lasso': Lasso,
+    #     'knn': KNeighborsRegressor,
+    #     'tree': DecisionTreeRegressor,
+    #     'gbr': GradientBoostingRegressor,
+        'xgb': XGBRegressor
+    }
+
+    grids = {
+        'linreg': {},
+        'ridge': {
+            "alpha": [0.0001], # list(np.logspace(-4, -1, 4))
+            "solver": ["lsqr"] # ["sag", "lsqr"]
+        },
+        'lasso': {
+            "alpha": [0.0001], # list(np.logspace(-4, 2, 7))
+            "max_iter": [1000]
+        },
+        'knn': {
+            "n_neighbors": [10], # [8, 9, 10]
+            "leaf_size": [30], # [25, 30, 35]
+            "p": [2],
+            "algorithm": ['auto']
+        },
+        'tree': {
+            "min_samples_split": [15], # [10, 15, 20, 25]
+            "max_depth": [8], # [6, 8]
+        #     "criterion": ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+            "splitter": ['best'] # , 'random'
+        },
+        'gbr': {
+            "learning_rate": [0.2], # [0.2, 0.1, 0.05]
+            "max_depth": [5, 6, 7] # [5, 6, 7, 8]
+        },
+        'xgb': {
+            "max_depth": [8], # [6, 7, 8, 9]
+            "n_estimators": [200, 300],
+            "learning_rate": [0.2] # [0.2, 0.1, 0.05]
+        }
+    }
+
+    return all_regressors, grids
+
+
+# In[3]:
+
+
+# I NEED THE MAIN FUNCTION WITH FOLLOWING ARGMENTS:
+# (BECAUSE THESE WOULD BE INPUT FROM HTML FORM)
+    
+def main_predicting(city, district, radius, floor, rooms, sq, year):
     
     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
-    
+    price_df4, cat_features, num_features, target = load_data()
+    X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
+    experiment = experiment_initialization("poland_apartments")
+    all_regressors, grids = set_regressors()
+    best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
     price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
     
-    return price_pred, score
+    return "With a probability of {0}%, the prise will be about {1:,.0f} PLN ".format(round(score * 100, 1), round(price_pred))
 
 
 # In[ ]:
