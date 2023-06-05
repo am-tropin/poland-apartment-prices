@@ -188,9 +188,10 @@ def parameter_product(parameters):
 
 
 # training loop
-def training_loop(experiment, model_class, parameters, X_train_scaled, y_train, X_test_scaled, y_test):
+def training_loop(experiment, model_class, parameters, scaled_arrays):
     runs_parameters = parameter_product(parameters)
     model_params = {}
+    X_train_scaled, y_train, X_test_scaled, y_test = scaled_arrays
     
     for i, run_parameters in enumerate(runs_parameters):
 #         print(f"Run {i}: {run_parameters}")
@@ -414,11 +415,12 @@ def set_regressors():
 # In[ ]:
 
 
-def select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test):
+def select_best_model(experiment, all_regressors, grids, scaled_arrays):
     
-    full_model_params = {}
+#     full_model_params = {}
     for reg, model_class in all_regressors.items():
-        full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
+#         full_model_params[reg] = training_loop(experiment, model_class, grids[reg], X_train_scaled, y_train, X_test_scaled, y_test)
+        training_loop(experiment, model_class, grids[reg], scaled_arrays)
     
     best_run_df = mlflow.search_runs(order_by=['metrics.R2 DESC'], max_results=1) 
     if len(best_run_df.index) == 0:
@@ -467,7 +469,8 @@ def main_predicting(city, district, radius, floor, rooms, sq, year):
     #     get_ipython().system_raw("mlflow ui --port 5000 &")
 
         X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
-        best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
+        scaled_arrays = [X_train_scaled, y_train, X_test_scaled, y_test]
+        best_model = select_best_model(experiment, all_regressors, grids, scaled_arrays)
         price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
 
         return "With a probability of {0}%, the price will be about {1:,.0f} PLN.".format(round(score * 100, 1), round(price_pred))
