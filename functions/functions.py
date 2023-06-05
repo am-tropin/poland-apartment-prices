@@ -27,7 +27,7 @@ import mlflow.sklearn
 # from mlflow import log_metric, log_param, log_artifact
 from mlflow.models.signature import infer_signature
 
-from IPython import get_ipython
+# from IPython import get_ipython
 
 # In[ ]:
 
