@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[4]:
 
 
 import pandas as pd
@@ -29,6 +29,7 @@ from mlflow.models.signature import infer_signature
 
 # from IPython import get_ipython
 
+
 # In[ ]:
 
 
@@ -44,12 +45,6 @@ def load_data():
     num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
     target = ['price']
     return price_df4, cat_features, num_features, target
-
-
-# In[ ]:
-
-
-
 
 
 # # 1. For model evaluation
@@ -88,12 +83,11 @@ def namestr(obj, namespace):
 
 
 def reg_model_implementation(model, grid, X_train, y_train, X_test, y_test):
-    '''
+    """
     This function:
     - fits and returns regression model with GridSearchCV;
     - prints confusion matrix and classification report.
-    '''
-    
+    """
     start_time = time.time()
     mod = model()
     mod_cv = GridSearchCV(mod, grid, cv=10)
@@ -122,9 +116,9 @@ def reg_model_implementation(model, grid, X_train, y_train, X_test, y_test):
 
 
 def show_feature_importances(model, col_names): # list(X_train) !!!!!!! 
-    '''
+    """
     This function plots the feature importances for given model.
-    '''
+    """
     resultdict = {}
     importance = model.feature_importances_
 
@@ -140,8 +134,6 @@ def show_feature_importances(model, col_names): # list(X_train) !!!!!!!
     plt.xticks(rotation='vertical')
     plt.title('Feature Importance')
     plt.show()
-    
-    return 1
 
 
 # # 2. For MLFlow tracking
@@ -170,7 +162,6 @@ def log_mlflow_run(model, signature, parameters, metrics):
 
     # Log tracked parameters only
     mlflow.log_params({key: model.get_params()[key] for key in parameters})
-
     mlflow.log_metrics(metrics)
 
     # log training loss (ONLY FOR GradientBoostingRegressor ???)
@@ -318,8 +309,7 @@ def check_sq(sq):
     
     if (
         type(sq) in [int, float] and 
-        sq >= 20 and
-        sq <= 100
+        sq >= 20 and sq <= 100
     ):
         return True
     else:
@@ -339,8 +329,7 @@ def check_year(year, city):
     }
     if (
         type(year) is int and 
-        year >= city_foundations[city] and
-        year <= date.today().year
+        year >= city_foundations[city] and year <= date.today().year
     ):
         return True
     else:
@@ -354,13 +343,11 @@ def check_year(year, city):
 
 def input_to_df(city, district, radius, floor, rooms, sq, year):
     
-    if (check_city_district_radius_floor_rooms(city, district, radius, floor, rooms)
-        and 
-        check_sq(sq)
-        and 
+    if (check_city_district_radius_floor_rooms(city, district, radius, floor, rooms) and 
+        check_sq(sq) and 
         check_year(year, city)
        ):
-        X_check = pd.DataFrame({
+        return pd.DataFrame({
             'city': city,
             'district': district,
             'floor': floor, 
@@ -369,7 +356,6 @@ def input_to_df(city, district, radius, floor, rooms, sq, year):
             'year': year,
             'radius': radius
         }, index=[0])
-        return X_check
     else:
         return None
 
@@ -402,8 +388,8 @@ def set_regressors():
         'knn': {
             "n_neighbors": [10], # [8, 9, 10]
             "leaf_size": [30], # [25, 30, 35]
-            "p": [2],
-            "algorithm": ['auto']
+            "p": [2]
+#             "algorithm": ['auto']
         },
         'tree': {
             "min_samples_split": [15], # [10, 15, 20, 25]
@@ -469,24 +455,25 @@ def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_tes
 # In[3]:
 
 
-# I NEED THE MAIN FUNCTION WITH FOLLOWING ARGMENTS:
-# (BECAUSE THESE WOULD BE INPUT FROM HTML FORM)
-    
 def main_predicting(city, district, radius, floor, rooms, sq, year):
     
     X_check = input_to_df(city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
-    price_df4, cat_features, num_features, target = load_data()
-    experiment = experiment_initialization("poland_apartments")
-    all_regressors, grids = set_regressors()
+    if X_check is not None:
+        price_df4, cat_features, num_features, target = load_data()
+        experiment = experiment_initialization("poland_apartments")
+        all_regressors, grids = set_regressors()
+
+        # run tracking UI in the background
+    #     get_ipython().system_raw("mlflow ui --port 5000 &")
+
+        X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
+        best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
+        price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
+
+        return "With a probability of {0}%, the price will be about {1:,.0f} PLN.".format(round(score * 100, 1), round(price_pred))
+    else:
+        return "Invalid input :("
     
-    # run tracking UI in the background
-#     get_ipython().system_raw("mlflow ui --port 5000 &")
-    
-    X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
-    best_model = select_best_model(experiment, all_regressors, grids, X_train_scaled, y_train, X_test_scaled, y_test)
-    price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
-    
-    return "With a probability of {0}%, the price will be about {1:,.0f} PLN ".format(round(score * 100, 1), round(price_pred))
 
 
 # In[ ]:
