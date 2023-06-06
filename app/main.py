@@ -4,6 +4,8 @@
 # In[1]:
 
 
+import sys
+sys.path.append('../')
 from functions.functions import main_predicting
 
 # API
