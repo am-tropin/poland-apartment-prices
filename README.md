@@ -57,7 +57,7 @@ The same code for both data processing and model evaluation also contains in the
 
 3. Start the server:
 ```bash
-  uvicorn main:app --reload
+  uvicorn app.main:app --reload
 ```
 
 4. Go to web-browser 
