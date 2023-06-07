@@ -27,7 +27,7 @@ async def root():
 
 # without html
 
-@app.get("/price_predictor/{date}")
+@app.get("/main_predicting/{date}")
 async def get_main_predicting(city: str, district: str, radius: float, floor: int, rooms: int, sq: float, year: int):
     return main_predicting(city, district, radius, floor, rooms, sq, year)
 
