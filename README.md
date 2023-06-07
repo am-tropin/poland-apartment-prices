@@ -45,7 +45,7 @@ The same code for both data processing and model evaluation also contains in the
 
 2. Go to the project directory:
 ```bash
-  cd poland-apartment-prices
+  cd poland-apartment-prices/app
 ```
 
 <!-- Create vitual enviroment and install dependencies
@@ -64,19 +64,23 @@ The same code for both data processing and model evaluation also contains in the
 ```bash
   http://127.0.0.1:8000/docs/
 ```
-and use the following box:
-
-- **Get Main Predicting**: Type city and district names, distance from the center of the city, floor number and number of rooms, apartment square and year of construction.
+and use the following box: **Get Main Predicting**. Type city and district names, distance from the center of the city, floor number and number of rooms, apartment square and year of construction.
 
 Or 
 
-5. Go to web-browser and use one the following types of links to get the same info in clear dictionary view:
+5. Go to web-browser and use the following link to get the same info after typing the parameters:
 
-- 5.1.
 ```bash
-  http://127.0.0.1:8000/price_predictor/Warszawa_Śródmieście_2_3_2_40_2000
+  http://127.0.0.1:8000/price/_
 ```
 
+Or 
+
+6. Go to web-browser and use the following type of links to get the same info in clear dictionary view:
+
+```bash
+  http://127.0.0.1:8000/main_predicting/Warszawa_Śródmieście_2_3_2_40_2000
+```
 
 
 ## MLflow Tracking
