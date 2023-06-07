@@ -10,14 +10,14 @@ from functions.functions import main_predicting
 
 # API
 from fastapi import FastAPI, Request, Form
-# from fastapi.templating import Jinja2Templates
+from fastapi.templating import Jinja2Templates
 
 
-# In[ ]:
+# In[3]:
 
 
 app = FastAPI()
-# templates = Jinja2Templates(directory="templates/")
+templates = Jinja2Templates(directory="templates/")
 
 
 @app.get("/")
@@ -27,26 +27,26 @@ async def root():
 
 # without html
 
-@app.get("/main_predicting/{date}")
+@app.get("/main_predicting/{city}_{district}_{radius}_{floor}_{rooms}_{sq}_{year}")
 async def get_main_predicting(city: str, district: str, radius: float, floor: int, rooms: int, sq: float, year: int):
     return main_predicting(city, district, radius, floor, rooms, sq, year)
 
 
-# for range
+# for html
 
-# @app.get("/price_html/{date1}_{date2}")
-# async def get_main_predicting_html(date1: str, date2: str):
-#     return {"Anniversaries in the range:": main_predicting(date1, date2)}
+@app.get("/price_html/{city}_{district}_{radius}_{floor}_{rooms}_{sq}_{year}")
+async def get_main_predicting_html(city: str, district: str, radius: float, floor: int, rooms: int, sq: float, year: int):
+    return {"Price prediction:": main_predicting(city, district, radius, floor, rooms, sq, year)}
 
-# @app.get("/price/{form}")
-# def form_post_price(request: Request):
-#     result = "Write start and end dates as YYYY-MM-DD"
-#     return templates.TemplateResponse('form_range.html', context={'request': request, 'result': result})
+@app.get("/price/{form}")
+def form_post_price(request: Request):
+    result = "Write apartment's parameters"
+    return templates.TemplateResponse('form_predictor.html', context={'request': request, 'result': result})
 
-# @app.post("/price/{form}")
-# def form_post_price(request: Request, date1: str = Form(...), date2: str = Form(...)):
-#     result = main_predicting(date1, date2)
-#     return templates.TemplateResponse('form_range.html', context={'request': request, 'result': result.to_html()})
+@app.post("/price/{form}")
+def form_post_price(request: Request, city: str = Form(...), district: str = Form(...), radius: float = Form(...), floor: int = Form(...), rooms: int = Form(...), sq: float = Form(...), year: int = Form(...)):
+    result = main_predicting(city, district, radius, floor, rooms, sq, year)
+    return templates.TemplateResponse('form_predictor.html', context={'request': request, 'result': result}) # .to_html()
 
 
 # In[ ]:
