@@ -10,8 +10,8 @@ WORKDIR /app
 RUN apt update
 RUN apt install git -y
 # RUN apt-get install gdal-bin
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip --no-cache-dir
+RUN pip install -r requirements.txt --no-cache-dir
 
 # Copy the other files
 COPY . /app
