@@ -16,6 +16,7 @@ Libraries: numpy, pandas, opendatasets, geopandas, geopy, sklearn, xgboost, mlxt
 - [Machine learning problem](#machine-learning-problem)
 - [Run locally](#run-locally)
 - [MLflow Tracking](#mlflow-tracking)
+- [Docker](#docker)
 
 
 ## Datasets
@@ -101,5 +102,22 @@ Or
 ```
 and choose **poland_apartments** experiment for comparing the models.
 
+
+## Docker
+
+1. Clone the project:
+```bash
+  git clone https://github.com/am-tropin/poland-apartment-prices
+```
+
+2. Go to the project directory:
+```bash
+  cd poland-apartment-prices/app
+```
+
+3. Create a docker container:
+```bash
+  docker build -t price-predictor .
+```
 
 
