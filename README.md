@@ -30,7 +30,7 @@ Libraries: numpy, pandas, opendatasets, geopandas, geopy, sklearn, xgboost, mlxt
 
 ## Machine learning problem
 
-- The given problem was solved by using **XGBoost Regressor**. It shows the best **R2-score (87%)** in comparison with other models: Linear Regression, Ridge, Lasso, Bagging Regressor, AdaBoost (by 65%), Decision Tree (77%), k-Nearest Neighbors (78%), Random Forest, Stacked Ensembles (by 83%) and Gradient Boosting (85%). Besides, the predictor of price by custom data (using XGBoost model) was built. The result is in the [model_evaluation.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/app/model_evaluation.ipynb) file.
+- The given problem was solved by using **XGBoost Regressor**. It shows the lowest **MAPE (10%)** in comparison with other models: Linear Regression, Ridge, Lasso, Bagging Regressor, AdaBoost (by 26-28%), Decision Tree (17%), k-Nearest Neighbors, Random Forest, Stacked Ensembles (by 14%) and Gradient Boosting (13%). Besides, the predictor of price by custom data (using XGBoost model) was built. The result is in the [model_evaluation.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/app/model_evaluation.ipynb) file.
 
 
 The same code for both data processing and model evaluation also contains in the [Poland_apartments__full.ipynb](https://github.com/am-tropin/poland-apartment-prices/blob/main/Poland_apartments__full.ipynb) file.
