@@ -20,21 +20,21 @@ import pandas as pd
 import sys
 sys.path.append('../')
 
-from functions.functions import load_data # depend on "poland_apartments_completed.csv"
-from functions.functions import namestr, parameter_product, check_sq, check_year # don't depend on any functions
+from functions.function_store import load_data # depend on "poland_apartments_completed.csv"
+from functions.function_store import namestr, parameter_product, check_sq, check_year # don't depend on any functions
 
 # 1. For model evaluation
-from functions.functions import to_split_and_scale, reg_model_implementation, show_feature_importances # don't depend on any functions
+from functions.function_store import to_split_and_scale, reg_model_implementation, show_feature_importances # don't depend on any functions
 
 # 2. For MLFlow tracking
-from functions.functions import rmsle_cv_score, log_mlflow_run, experiment_initialization # don't depend on any functions
-from functions.functions import training_loop # depend on other functions
+from functions.function_store import rmsle_cv_score, log_mlflow_run, experiment_initialization # don't depend on any functions
+from functions.function_store import training_loop # depend on other functions
 
 # 3. For predicting by input data with the best model
-from functions.functions import check_city_district_radius_floor_rooms # depend on "poland_apartments_completed.csv"
-from functions.functions import input_to_df # depend on other functions
-from functions.functions import select_best_model, main_predicting # depend on other functions
-from functions.functions import set_regressors, predict_by_input # don't depend on any functions
+from functions.function_store import check_city_district_radius_floor_rooms # depend on "poland_apartments_completed.csv"
+from functions.function_store import input_to_df # depend on other functions
+from functions.function_store import select_best_model, main_predicting # depend on other functions
+from functions.function_store import set_regressors, predict_by_input # don't depend on any functions
 
 
 # In[ ]:
@@ -50,7 +50,7 @@ def test_for_1_check_sq():
     assert check_sq(20) is True
 
 def test_for_2_check_sq():
-    assert check_sq(90.9) is True
+    assert check_sq(99.9) is True
 
 def test_for_3_check_sq():
     assert check_sq(19) is False
