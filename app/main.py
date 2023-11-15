@@ -6,7 +6,7 @@
 
 # import sys
 # sys.path.append('../')
-from functions.functions import main_predicting
+from functions.function_store import main_predicting
 
 # API
 from fastapi import FastAPI, Request, Form
