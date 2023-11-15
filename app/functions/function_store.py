@@ -42,7 +42,6 @@ from mlflow.models.signature import infer_signature
 
 def load_data(apartments_df):
 #     apartments_df = pd.read_csv(apartments_file)
-    apartments_df
     cat_features = ['city', 'district'] # 'floor', 'rooms'?
     num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
     target = ['price']

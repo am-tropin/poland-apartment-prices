@@ -57,8 +57,8 @@ TEST_APARTMENTS_FILE = "test_file1.csv"
 # Creating a fixture that grabs a file before running a test
 @pytest.fixture
 def grab_test_file():
-    test_file = pd.read_csv(TEST_APARTMENTS_FILE)
-    return test_file
+    test_df = pd.read_csv(TEST_APARTMENTS_FILE)
+    return test_df
 
 # # Using the fixture in a test function
 # def test_file_content(grab_test_file):
