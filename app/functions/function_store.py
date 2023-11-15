@@ -33,14 +33,14 @@ from mlflow.models.signature import infer_signature
 # In[ ]:
 
 
-
+APARTMENTS_FILE = "poland_apartments_completed.csv"
 
 
 # In[ ]:
 
 
 def load_data():
-    price_df4 = pd.read_csv("poland_apartments_completed.csv")
+    price_df4 = pd.read_csv(APARTMENTS_FILE)
     cat_features = ['city', 'district'] # 'floor', 'rooms'?
     num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
     target = ['price']
@@ -272,7 +272,8 @@ def experiment_initialization(experiment_name):
 
 def check_city_district_radius_floor_rooms(city, district, radius, floor, rooms):
     
-    price_df4 = pd.read_csv("poland_apartments_completed.csv")
+#     price_df4 = pd.read_csv(APARTMENTS_FILE)
+    price_df4 = load_data()[0]
     floor_values = list(set(price_df4['floor']))
     rooms_values = list(set(price_df4['rooms']))
     

@@ -7,10 +7,10 @@
 import pytest
 
 
-# In[10]:
+# In[2]:
 
 
-from datetime import datetime
+# from datetime import datetime
 import pandas as pd
 
 
@@ -31,10 +31,115 @@ from functions.function_store import rmsle_cv_score, log_mlflow_run, experiment_
 from functions.function_store import training_loop # depend on other functions
 
 # 3. For predicting by input data with the best model
-from functions.function_store import check_city_district_radius_floor_rooms # depend on "poland_apartments_completed.csv"
-from functions.function_store import input_to_df # depend on other functions
+from functions.function_store import check_city_district_radius_floor_rooms, input_to_df # depend on other functions
 from functions.function_store import select_best_model, main_predicting # depend on other functions
 from functions.function_store import set_regressors, predict_by_input # don't depend on any functions
+
+
+# In[9]:
+
+
+APARTMENTS_FILE = "test_file1.csv"
+
+# test_df = pd.read_csv('test_file.csv')
+# # test_df.shape
+
+# test1_df = test_df.groupby('city').apply(lambda x: x.sample(frac=0.2)).reset_index(drop=True)
+# # test1_df.shape
+# test1_df.to_csv("test_file1.csv")
+
+# https://stackoverflow.com/questions/22472213/python-random-selection-per-group
+
+
+# In[ ]:
+
+
+# Creating a fixture that grabs a file before running a test
+@pytest.fixture
+def grab_test_file():
+    test_file = pd.read_csv(APARTMENTS_FILE)
+    return test_file
+
+# # Using the fixture in a test function
+# def test_file_content(grab_test_file):
+#     assert grab_test_file.shape == (10, 5)
+
+# https://towardsdatascience.com/writing-better-code-through-testing-f3150abec6ca
+
+
+# In[ ]:
+
+
+# def test_1_load_data(grab_test_file):
+#     assert grab_test_file.shape == (4315, 19)
+
+
+# In[ ]:
+
+
+def test_01_load_data():
+    assert load_data()[0].shape == (4315, 19)
+
+def test_11_load_data():
+    assert load_data()[1] == ['city', 'district']
+
+def test_21_load_data():
+    assert load_data()[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
+    
+def test_31_load_data():
+    assert load_data()[3] == ['price']
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+def test_1_check_city_district_radius_floor_rooms():
+    assert check_city_district_radius_floor_rooms("Kraków", "Śródmieście", 2, 3, 2) is False
+    
+    
+#     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
+
+
+# In[ ]:
+
+
+# def check_city_district_radius_floor_rooms(city, district, radius, floor, rooms):
+    
+#     price_df4 = load_data()[0]
+#     floor_values = list(set(price_df4['floor']))
+#     rooms_values = list(set(price_df4['rooms']))
+    
+#     geo_df_for_check = price_df4.groupby(['city', 'district']).agg({'radius':['min','max']})
+    
+#     if (city, district) not in geo_df_for_check.index:
+#         print("Invalid city and/or district!")
+#         return False
+#     else:
+#         min_radius = geo_df_for_check.loc[(city, district)][('radius', 'min')]
+#         max_radius = geo_df_for_check.loc[(city, district)][('radius', 'max')]
+#         if not (radius >= min_radius and radius <= max_radius):
+#             print("The radius must be between {0} and {1}".format(round(min_radius, 2), round(max_radius, 2)))
+#             return False
+#         elif floor not in floor_values:
+#             print("The floor must be integer and between {0} and {1}".format(floor_values.min(), floor_values.max()))
+#             return False
+#         elif rooms not in rooms_values:
+#             print("The rooms must be integer and between {0} and {1}".format(rooms_values.min(), rooms_values.max()))
+#             return False
+#         else:
+#             return True
 
 
 # In[ ]:
@@ -60,6 +165,7 @@ def test_for_4_check_sq():
 
 
 # In[ ]:
+
 
 def test_for_11_check_year():
     assert check_year(2020, 'Warszawa') is True
@@ -87,8 +193,6 @@ def test_for_32_check_year():
 
 def test_for_33_check_year():
     assert check_year(2130, 'Poznañ') is False
-
-
 
 
 
