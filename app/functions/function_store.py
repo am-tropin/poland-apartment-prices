@@ -34,17 +34,19 @@ from mlflow.models.signature import infer_signature
 
 
 POLAND_APARTMENTS_FILE = "poland_apartments_completed.csv"
+POLAND_APARTMENTS_DF = pd.read_csv(POLAND_APARTMENTS_FILE)
 
 
 # In[ ]:
 
 
-def load_data(apartments_file):
-    price_df4 = pd.read_csv(apartments_file)
+def load_data(apartments_df):
+#     apartments_df = pd.read_csv(apartments_file)
+    apartments_df
     cat_features = ['city', 'district'] # 'floor', 'rooms'?
     num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
     target = ['price']
-    return price_df4, cat_features, num_features, target
+    return apartments_df, cat_features, num_features, target
 
 
 # # 1. For model evaluation
@@ -270,14 +272,14 @@ def experiment_initialization(experiment_name):
 # In[ ]:
 
 
-def check_city_district_radius_floor_rooms(apartments_file, city, district, radius, floor, rooms):
+def check_city_district_radius_floor_rooms(apartments_df, city, district, radius, floor, rooms):
     
 #     price_df4 = pd.read_csv(apartments_file)
-    price_df4 = load_data(apartments_file)[0]
-    floor_values = list(set(price_df4['floor']))
-    rooms_values = list(set(price_df4['rooms']))
+#     price_df4 = apartments_df
+    floor_values = list(set(apartments_df['floor']))
+    rooms_values = list(set(apartments_df['rooms']))
     
-    geo_df_for_check = price_df4.groupby(['city', 'district']).agg({'radius':['min','max']})
+    geo_df_for_check = apartments_df.groupby(['city', 'district']).agg({'radius':['min','max']})
     
     if (city, district) not in geo_df_for_check.index:
         print("Invalid city and/or district!")
@@ -343,9 +345,9 @@ def check_year(year, city):
 # In[ ]:
 
 
-def input_to_df(apartments_file, city, district, radius, floor, rooms, sq, year):
+def input_to_df(apartments_df, city, district, radius, floor, rooms, sq, year):
     
-    if (check_city_district_radius_floor_rooms(apartments_file, city, district, radius, floor, rooms) and 
+    if (check_city_district_radius_floor_rooms(apartments_df, city, district, radius, floor, rooms) and 
         check_sq(sq) and 
         check_year(year, city)
        ):
@@ -458,9 +460,9 @@ def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_tes
 # In[3]:
 
 
-def main_predicting(city, district, radius, floor, rooms, sq, year, apartments_file=POLAND_APARTMENTS_FILE):
+def main_predicting(city, district, radius, floor, rooms, sq, year, apartments_df=POLAND_APARTMENTS_DF):
     
-    X_check = input_to_df(apartments_file=apartments_file, city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
+    X_check = input_to_df(apartments_df=apartments_df, city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
     if X_check is not None:
         price_df4, cat_features, num_features, target = load_data()
         experiment = experiment_initialization("poland_apartments")
