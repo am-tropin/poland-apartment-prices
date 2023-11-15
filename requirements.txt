@@ -25,7 +25,7 @@ geopandas==0.12.2
 kaleido==0.2.1
 numpy==1.24.1
 opendatasets==0.1.22
-sklearn==0.0.post1
+scikit-learn==1.2.0
 xgboost==1.7.3
 mlxtend==0.21.0
 mlflow==2.3.2
