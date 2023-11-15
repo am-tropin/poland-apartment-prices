@@ -39,7 +39,7 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 # In[9]:
 
 
-TEST_APARTMENTS_FILE = "test_file1.csv"
+TEST_APARTMENTS_FILE = "tests/test_file1.csv"
 TEST_APARTMENTS_DF = pd.read_csv(TEST_APARTMENTS_FILE)
 
 # test_df = pd.read_csv('test_file.csv')
