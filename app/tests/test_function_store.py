@@ -55,10 +55,9 @@ TEST_APARTMENTS_FILE = "test_file1.csv"
 
 
 # Creating a fixture that grabs a file before running a test
-@pytest.fixture
+@pytest.fixture(scope="module")
 def grab_test_file():
-    test_df = pd.read_csv(TEST_APARTMENTS_FILE)
-    return test_df
+    return pd.read_csv(TEST_APARTMENTS_FILE)
 
 # # Using the fixture in a test function
 # def test_file_content(grab_test_file):
@@ -70,8 +69,8 @@ def grab_test_file():
 # In[ ]:
 
 
-# def test_1_load_data(grab_test_file):
-#     assert grab_test_file.shape == (4315, 19)
+def test_1_load_data(grab_test_file):
+    assert grab_test_file.shape == (4315, 19)
 
 
 # In[ ]:
