@@ -39,7 +39,7 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 # In[9]:
 
 
-APARTMENTS_FILE = "test_file1.csv"
+TEST_APARTMENTS_FILE = "test_file1.csv"
 
 # test_df = pd.read_csv('test_file.csv')
 # # test_df.shape
@@ -57,7 +57,7 @@ APARTMENTS_FILE = "test_file1.csv"
 # Creating a fixture that grabs a file before running a test
 @pytest.fixture
 def grab_test_file():
-    test_file = pd.read_csv(APARTMENTS_FILE)
+    test_file = pd.read_csv(TEST_APARTMENTS_FILE)
     return test_file
 
 # # Using the fixture in a test function
@@ -78,16 +78,16 @@ def grab_test_file():
 
 
 def test_01_load_data():
-    assert load_data()[0].shape == (4315, 19)
+    assert load_data(TEST_APARTMENTS_FILE)[0].shape == (4315, 19)
 
 def test_11_load_data():
-    assert load_data()[1] == ['city', 'district']
+    assert load_data(TEST_APARTMENTS_FILE)[1] == ['city', 'district']
 
 def test_21_load_data():
-    assert load_data()[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
+    assert load_data(TEST_APARTMENTS_FILE)[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
     
 def test_31_load_data():
-    assert load_data()[3] == ['price']
+    assert load_data(TEST_APARTMENTS_FILE)[3] == ['price']
 
 
 # In[ ]:
