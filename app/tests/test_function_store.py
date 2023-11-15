@@ -61,6 +61,33 @@ def test_for_4_check_sq():
 
 # In[ ]:
 
+def test_for_11_check_year():
+    assert check_year(2020, 'Warszawa') is True
+
+def test_for_12_check_year():
+    assert check_year(920, 'Warszawa') is False
+
+def test_for_13_check_year():
+    assert check_year(2130, 'Warszawa') is False
+
+def test_for_21_check_year():
+    assert check_year(2020, 'Kraków') is True
+
+def test_for_22_check_year():
+    assert check_year(920, 'Kraków') is False
+
+def test_for_23_check_year():
+    assert check_year(2130, 'Kraków') is False
+
+def test_for_31_check_year():
+    assert check_year(2020, 'Poznañ') is True
+
+def test_for_32_check_year():
+    assert check_year(920, 'Poznañ') is False
+
+def test_for_33_check_year():
+    assert check_year(2130, 'Poznañ') is False
+
 
 
 
