@@ -13,6 +13,14 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 
 
+# In[ ]:
+
+
+import pandas as pd
+POLAND_APARTMENTS_FILE = "poland_apartments_completed.csv"
+POLAND_APARTMENTS_DF = pd.read_csv(POLAND_APARTMENTS_FILE)
+
+
 # In[3]:
 
 
@@ -29,14 +37,14 @@ async def root():
 
 @app.get("/main_predicting/{city}_{district}_{radius}_{floor}_{rooms}_{sq}_{year}")
 async def get_main_predicting(city: str, district: str, radius: float, floor: int, rooms: int, sq: float, year: int):
-    return main_predicting(city, district, radius, floor, rooms, sq, year)
+    return main_predicting(city, district, radius, floor, rooms, sq, year, POLAND_APARTMENTS_DF)
 
 
 # for html
 
 @app.get("/price_html/{city}_{district}_{radius}_{floor}_{rooms}_{sq}_{year}")
 async def get_main_predicting_html(city: str, district: str, radius: float, floor: int, rooms: int, sq: float, year: int):
-    return {"Price prediction:": main_predicting(city, district, radius, floor, rooms, sq, year)}
+    return {"Price prediction:": main_predicting(city, district, radius, floor, rooms, sq, year, POLAND_APARTMENTS_DF)}
 
 @app.get("/price/{form}")
 def form_post_price(request: Request):
@@ -45,7 +53,7 @@ def form_post_price(request: Request):
 
 @app.post("/price/{form}")
 def form_post_price(request: Request, city: str = Form(...), district: str = Form(...), radius: float = Form(...), floor: int = Form(...), rooms: int = Form(...), sq: float = Form(...), year: int = Form(...)):
-    result = main_predicting(city, district, radius, floor, rooms, sq, year)
+    result = main_predicting(city, district, radius, floor, rooms, sq, year, POLAND_APARTMENTS_DF)
     return templates.TemplateResponse('form_predictor.html', context={'request': request, 'result': result}) # .to_html()
 
 

@@ -33,8 +33,8 @@ from mlflow.models.signature import infer_signature
 # In[ ]:
 
 
-POLAND_APARTMENTS_FILE = "poland_apartments_completed.csv"
-POLAND_APARTMENTS_DF = pd.read_csv(POLAND_APARTMENTS_FILE)
+# POLAND_APARTMENTS_FILE = "poland_apartments_completed.csv"
+# POLAND_APARTMENTS_DF = pd.read_csv(POLAND_APARTMENTS_FILE)
 
 
 # In[ ]:
@@ -460,7 +460,7 @@ def predict_by_input(X_check, cat_features, st_scaler, labels_dict, model, X_tes
 # In[3]:
 
 
-def main_predicting(city, district, radius, floor, rooms, sq, year, apartments_df=POLAND_APARTMENTS_DF):
+def main_predicting(city, district, radius, floor, rooms, sq, year, apartments_df): # apartments_df=POLAND_APARTMENTS_DF
     
     X_check = input_to_df(apartments_df=apartments_df, city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
     if X_check is not None:
