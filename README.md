@@ -4,7 +4,10 @@ Predicting the price of apartment by its features (square, floor, district, dist
 
 Libraries: numpy, pandas, opendatasets, geopandas, geopy, sklearn, xgboost, mlxtend, seaborn, matplolib, time, itertools, mlflow, fastapi
 
-[![Code Climate][codeclimate-badge]][codeclimate-link]
+[![codecov][codecov-badge]][codecov-link] [![Code Climate][codeclimate-badge]][codeclimate-link]
+
+[codecov-badge]: https://codecov.io/gh/am-tropin/poland-apartment-prices/coverage.svg
+[codecov-link]: https://codecov.io/gh/am-tropin/poland-apartment-prices
 
 [codeclimate-badge]: https://codeclimate.com/github/am-tropin/poland-apartment-prices.svg
 [codeclimate-link]: https://codeclimate.com/github/am-tropin/poland-apartment-prices
