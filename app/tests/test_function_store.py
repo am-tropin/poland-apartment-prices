@@ -58,7 +58,7 @@ def grab_test_file():
 
 def test_1_check_city_district_radius_floor_rooms():
 #     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
-    assert check_city_district_radius_floor_rooms(grab_test_file(), "Kraków", "Śródmieście", 2, 3, 2) is False
+    assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
     
     
 #     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
