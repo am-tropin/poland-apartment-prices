@@ -282,10 +282,10 @@ def experiment_initialization(experiment_name):
 def check_city_district_radius_floor_rooms(apartments_df, city, district, radius, floor, rooms):
     
 #     apartments_df = pd.read_csv(apartments_file)
-#     floor_values = list(set(apartments_df['floor']))
-#     rooms_values = list(set(apartments_df['rooms']))
-    floor_values = list(set(apartments_df.floor))
-    rooms_values = list(set(apartments_df.rooms))
+    floor_values = list(set(apartments_df['floor']))
+    rooms_values = list(set(apartments_df['rooms']))
+#     floor_values = list(set(apartments_df.floor))
+#     rooms_values = list(set(apartments_df.rooms))
     
     geo_df_for_check = apartments_df.groupby(['city', 'district']).agg({'radius':['min','max']})
     

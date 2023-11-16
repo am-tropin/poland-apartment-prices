@@ -40,7 +40,7 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 
 from datatest import working_directory
 
-@pytest.fixture(scope="session") #(scope='module')
+@pytest.fixture #(scope="session") #(scope='module')
 @working_directory(__file__)
 def grab_test_file():
     file_path = 'test_file.csv'
