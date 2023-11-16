@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[10]:
 
 
 import pytest
 
 
-# In[2]:
+# In[11]:
 
 
-# from datetime import datetime
 import pandas as pd
 
 
-# In[1]:
+# In[15]:
 
 
 import sys
@@ -36,10 +35,24 @@ from functions.function_store import select_best_model, main_predicting # depend
 from functions.function_store import set_regressors, predict_by_input # don't depend on any functions
 
 
+# In[14]:
+
+
+# import os 
+# os.listdir()
+
+
+# In[ ]:
+
+
+
+
+
 # In[9]:
 
 
-TEST_APARTMENTS_FILE = "tests/test_file1.csv"
+sys.path.append('../app/tests/')
+TEST_APARTMENTS_FILE = "test_file1.csv"
 TEST_APARTMENTS_DF = pd.read_csv(TEST_APARTMENTS_FILE)
 
 # test_df = pd.read_csv('test_file.csv')
