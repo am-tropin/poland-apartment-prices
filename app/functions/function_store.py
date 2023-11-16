@@ -40,12 +40,20 @@ from mlflow.models.signature import infer_signature
 # In[ ]:
 
 
-def load_data(apartments_df):
-#     apartments_df = pd.read_csv(apartments_file)
-    cat_features = ['city', 'district'] # 'floor', 'rooms'?
-    num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
-    target = ['price']
-    return apartments_df, cat_features, num_features, target
+CAT_FEATURES = ['city', 'district'] # 'floor', 'rooms'?
+NUM_FEATURES = ['floor', 'rooms', 'sq', 'year', 'radius']
+TARGET = ['price']
+
+
+# In[ ]:
+
+
+# def load_data(apartments_df):
+# #     apartments_df = pd.read_csv(apartments_file)
+#     cat_features = ['city', 'district'] # 'floor', 'rooms'?
+#     num_features = ['floor', 'rooms', 'sq', 'year', 'radius']
+#     target = ['price']
+#     return apartments_df, cat_features, num_features, target
 
 
 # # 1. For model evaluation
@@ -273,8 +281,7 @@ def experiment_initialization(experiment_name):
 
 def check_city_district_radius_floor_rooms(apartments_df, city, district, radius, floor, rooms):
     
-#     price_df4 = pd.read_csv(apartments_file)
-#     price_df4 = apartments_df
+#     apartments_df = pd.read_csv(apartments_file)
     floor_values = list(set(apartments_df['floor']))
     rooms_values = list(set(apartments_df['rooms']))
     
@@ -299,7 +306,7 @@ def check_city_district_radius_floor_rooms(apartments_df, city, district, radius
             return True
 #         else:    
 #             for col in [floor, rooms]: # city, district, 
-#                 if col not in list(set(price_df4[namestr(col, globals())[0]])):
+#                 if col not in list(set(apartments_df[namestr(col, globals())[0]])):
 #                     print(f"Invalid {col}")
 #                     return False
     
@@ -463,14 +470,14 @@ def main_predicting(city, district, radius, floor, rooms, sq, year, apartments_d
     
     X_check = input_to_df(apartments_df=apartments_df, city='Warszawa', district='Śródmieście', radius=2, floor=3, rooms=2, sq=40, year=2000)
     if X_check is not None:
-        price_df4, cat_features, num_features, target = load_data()
+        apartments_df, cat_features, num_features, target = apartments_df, CAT_FEATURES, NUM_FEATURES, TARGET
         experiment = experiment_initialization("poland_apartments")
         all_regressors, grids = set_regressors()
 
         # run tracking UI in the background
     #     get_ipython().system_raw("mlflow ui --port 5000 &")
 
-        X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(price_df4, cat_features, num_features, target)
+        X_train_scaled, X_test_scaled, y_train, y_test, st_scaler, labels_dict = to_split_and_scale(apartments_df, cat_features, num_features, target)
         scaled_arrays = [X_train_scaled, y_train, X_test_scaled, y_test]
         best_model = select_best_model(experiment, all_regressors, grids, scaled_arrays)
         price_pred, score = predict_by_input(X_check, cat_features, st_scaler, labels_dict, best_model, X_test_scaled, y_test)
