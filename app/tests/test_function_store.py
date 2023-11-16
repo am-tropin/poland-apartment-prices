@@ -53,7 +53,7 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 
 # sys.path.append('../app/tests/')
 TEST_APARTMENTS_FILE = "../app/tests/test_file1.csv"
-TEST_APARTMENTS_DF = pd.read_csv(TEST_APARTMENTS_FILE)
+# TEST_APARTMENTS_DF = pd.read_csv(TEST_APARTMENTS_FILE)
 
 # test_df = pd.read_csv('test_file.csv')
 # # test_df.shape
@@ -83,28 +83,28 @@ def grab_test_file():
 # In[ ]:
 
 
-# def test_1_load_data(grab_test_file):
-#     assert grab_test_file.shape == (4315, 19)
+def test_1_load_data(grab_test_file):
+    assert grab_test_file.shape == (4315, 19)
 
 
 # In[ ]:
 
 
 def test_01_load_data():
-    assert load_data(TEST_APARTMENTS_DF)[0].shape == (4315, 19)
-#     assert load_data(grab_test_file)[0].shape == (4315, 19)
+#     assert load_data(TEST_APARTMENTS_DF)[0].shape == (4315, 19)
+    assert load_data(grab_test_file)[0].shape == (4315, 19)
 
 def test_11_load_data():
-    assert load_data(TEST_APARTMENTS_DF)[1] == ['city', 'district']
-#     assert load_data(grab_test_file)[1] == ['city', 'district']
+#     assert load_data(TEST_APARTMENTS_DF)[1] == ['city', 'district']
+    assert load_data(grab_test_file)[1] == ['city', 'district']
 
 def test_21_load_data():
-    assert load_data(TEST_APARTMENTS_DF)[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
-#     assert load_data(grab_test_file)[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
+#     assert load_data(TEST_APARTMENTS_DF)[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
+    assert load_data(grab_test_file)[2] == ['floor', 'rooms', 'sq', 'year', 'radius']
     
 def test_31_load_data():
-    assert load_data(TEST_APARTMENTS_DF)[3] == ['price']
-#     assert load_data(grab_test_file)[3] == ['price']
+#     assert load_data(TEST_APARTMENTS_DF)[3] == ['price']
+    assert load_data(grab_test_file)[3] == ['price']
 
 
 # In[ ]:
@@ -123,8 +123,8 @@ def test_31_load_data():
 
 
 def test_1_check_city_district_radius_floor_rooms():
-    assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
-#     assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
+#     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
+    assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
     
     
 #     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
