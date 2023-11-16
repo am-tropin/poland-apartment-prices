@@ -65,10 +65,11 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 # https://stackoverflow.com/questions/22472213/python-random-selection-per-group
 
 
-# In[ ]:
+# In[17]:
 
 
-
+# test_df = pd.read_csv('test_file.csv')
+# test_df.shape
 
 
 # In[ ]:
@@ -76,7 +77,7 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 
 from datatest import working_directory
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="session") #(scope='module')
 @working_directory(__file__)
 def grab_test_file():
     file_path = 'test_file.csv'
@@ -116,15 +117,15 @@ def grab_test_file():
 
 
 def test_1_load_data(grab_test_file):
-    assert grab_test_file.shape == (4315, 19)
+    assert grab_test_file.shape == (4315, 20)
 
 
 # In[ ]:
 
 
 def test_01_load_data():
-#     assert load_data(TEST_APARTMENTS_DF)[0].shape == (4315, 19)
-    assert load_data(grab_test_file)[0].shape == (4315, 19)
+#     assert load_data(TEST_APARTMENTS_DF)[0].shape == (4315, 20)
+    assert load_data(grab_test_file)[0].shape == (4315, 20)
 
 def test_11_load_data():
 #     assert load_data(TEST_APARTMENTS_DF)[1] == ['city', 'district']
@@ -137,18 +138,6 @@ def test_21_load_data():
 def test_31_load_data():
 #     assert load_data(TEST_APARTMENTS_DF)[3] == ['price']
     assert load_data(grab_test_file)[3] == ['price']
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
