@@ -48,19 +48,19 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 
 
 
-# In[9]:
+# In[16]:
 
 
 # sys.path.append('../app/tests/')
-TEST_APARTMENTS_FILE = "../app/tests/test_file1.csv"
+# TEST_APARTMENTS_FILE = "../app/tests/test_file1.csv"
 # TEST_APARTMENTS_DF = pd.read_csv(TEST_APARTMENTS_FILE)
 
-# test_df = pd.read_csv('test_file.csv')
+# test_df = pd.read_csv('original_file.csv')
 # # test_df.shape
 
 # test1_df = test_df.groupby('city').apply(lambda x: x.sample(frac=0.2)).reset_index(drop=True)
 # # test1_df.shape
-# test1_df.to_csv("test_file1.csv")
+# test1_df.to_csv("test_file.csv")
 
 # https://stackoverflow.com/questions/22472213/python-random-selection-per-group
 
@@ -68,10 +68,42 @@ TEST_APARTMENTS_FILE = "../app/tests/test_file1.csv"
 # In[ ]:
 
 
-# Creating a fixture that grabs a file before running a test
-@pytest.fixture(scope="module")
+
+
+
+# In[ ]:
+
+
+from datatest import working_directory
+
+@pytest.fixture(scope='module')
+@working_directory(__file__)
 def grab_test_file():
-    return pd.read_csv(TEST_APARTMENTS_FILE)
+    file_path = 'test_file.csv'
+    try:
+        return pd.read_csv(file_path)
+    except FileNotFoundError:
+        pytest.skip(f'cannot find {file_path}')
+
+# !!! https://datatest.readthedocs.io/en/stable/reference/data-handling.html
+# https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/discussion/tips-and-tricks.rst?plain=1#L448
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+# TEST_APARTMENTS_FILE = "test_file.csv"
+
+# # Creating a fixture that grabs a file before running a test
+# @pytest.fixture(scope="session") #(scope="module")
+# def grab_test_file():
+#     return pd.read_csv(TEST_APARTMENTS_FILE)
 
 # # Using the fixture in a test function
 # def test_file_content(grab_test_file):
