@@ -35,6 +35,107 @@ from functions.function_store import select_best_model, main_predicting # depend
 from functions.function_store import set_regressors, predict_by_input # don't depend on any functions
 
 
+# In[19]:
+
+
+from datatest import working_directory
+
+@pytest.fixture(scope="session") #(scope='module')
+@working_directory(__file__)
+def grab_test_file():
+    file_path = 'test_file.csv'
+    try:
+        return pd.read_csv(file_path)
+    except FileNotFoundError:
+        pytest.skip(f'cannot find {file_path}')
+
+# !!! https://datatest.readthedocs.io/en/stable/reference/data-handling.html
+# https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/discussion/tips-and-tricks.rst?plain=1#L448
+
+
+# In[ ]:
+
+
+def test_1_check_city_district_radius_floor_rooms():
+#     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
+    assert check_city_district_radius_floor_rooms(grab_test_file(), "Kraków", "Śródmieście", 2, 3, 2) is False
+    
+    
+#     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+def test_for_1_check_sq():
+    assert check_sq(20) is True
+
+def test_for_2_check_sq():
+    assert check_sq(99.9) is True
+
+def test_for_3_check_sq():
+    assert check_sq(19) is False
+
+def test_for_4_check_sq():
+    assert check_sq(100.1) is False
+
+
+# In[ ]:
+
+
+def test_for_11_check_year():
+    assert check_year(2020, 'Warszawa') is True
+
+def test_for_12_check_year():
+    assert check_year(920, 'Warszawa') is False
+
+def test_for_13_check_year():
+    assert check_year(2130, 'Warszawa') is False
+
+def test_for_21_check_year():
+    assert check_year(2020, 'Kraków') is True
+
+def test_for_22_check_year():
+    assert check_year(920, 'Kraków') is False
+
+def test_for_23_check_year():
+    assert check_year(2130, 'Kraków') is False
+
+def test_for_31_check_year():
+    assert check_year(2020, 'Poznañ') is True
+
+def test_for_32_check_year():
+    assert check_year(920, 'Poznañ') is False
+
+def test_for_33_check_year():
+    assert check_year(2130, 'Poznañ') is False
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
 # In[14]:
 
 
@@ -70,24 +171,6 @@ from functions.function_store import set_regressors, predict_by_input # don't de
 
 # test_df = pd.read_csv('test_file.csv')
 # test_df.shape
-
-
-# In[19]:
-
-
-from datatest import working_directory
-
-@pytest.fixture(scope="session") #(scope='module')
-@working_directory(__file__)
-def grab_test_file():
-    file_path = 'test_file.csv'
-    try:
-        return pd.read_csv(file_path)
-    except FileNotFoundError:
-        pytest.skip(f'cannot find {file_path}')
-
-# !!! https://datatest.readthedocs.io/en/stable/reference/data-handling.html
-# https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/discussion/tips-and-tricks.rst?plain=1#L448
 
 
 # In[ ]:
@@ -143,17 +226,6 @@ def grab_test_file():
 # In[ ]:
 
 
-def test_1_check_city_district_radius_floor_rooms():
-#     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
-    assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
-    
-    
-#     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
-
-
-# In[ ]:
-
-
 # def check_city_district_radius_floor_rooms(city, district, radius, floor, rooms):
     
 #     price_df4 = load_data()[0]
@@ -184,54 +256,6 @@ def test_1_check_city_district_radius_floor_rooms():
 # In[ ]:
 
 
-
-
-
-# In[ ]:
-
-
-def test_for_1_check_sq():
-    assert check_sq(20) is True
-
-def test_for_2_check_sq():
-    assert check_sq(99.9) is True
-
-def test_for_3_check_sq():
-    assert check_sq(19) is False
-
-def test_for_4_check_sq():
-    assert check_sq(100.1) is False
-
-
-# In[ ]:
-
-
-def test_for_11_check_year():
-    assert check_year(2020, 'Warszawa') is True
-
-def test_for_12_check_year():
-    assert check_year(920, 'Warszawa') is False
-
-def test_for_13_check_year():
-    assert check_year(2130, 'Warszawa') is False
-
-def test_for_21_check_year():
-    assert check_year(2020, 'Kraków') is True
-
-def test_for_22_check_year():
-    assert check_year(920, 'Kraków') is False
-
-def test_for_23_check_year():
-    assert check_year(2130, 'Kraków') is False
-
-def test_for_31_check_year():
-    assert check_year(2020, 'Poznañ') is True
-
-def test_for_32_check_year():
-    assert check_year(920, 'Poznañ') is False
-
-def test_for_33_check_year():
-    assert check_year(2130, 'Poznañ') is False
 
 
 
