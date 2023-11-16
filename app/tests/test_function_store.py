@@ -19,7 +19,7 @@ import pandas as pd
 import sys
 sys.path.append('../app/')
 
-from functions.function_store import load_data # depend on "poland_apartments_completed.csv"
+# from functions.function_store import load_data # depend on "poland_apartments_completed.csv"
 from functions.function_store import namestr, parameter_product, check_sq, check_year # don't depend on any functions
 
 # 1. For model evaluation
