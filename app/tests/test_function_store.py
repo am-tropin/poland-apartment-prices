@@ -61,7 +61,7 @@ import datatest as dt
 # )
 
 @pytest.mark.mandatory
-def test_column_names(df):
+def test_column_names(grab_test_file):
     required_names = {'floor', 'rooms', 'city', 'district', 'radius'}
     dt.validate(grab_test_file.columns, required_names)
 # https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/intro/automated-testing.rst#L139
