@@ -7,7 +7,7 @@
 import pytest
 
 
-# In[11]:
+# In[10]:
 
 
 import pandas as pd
@@ -62,7 +62,11 @@ import datatest as dt
 
 @pytest.mark.mandatory
 def test_column_names(grab_test_file):
-    required_names = {'floor', 'rooms', 'city', 'district', 'radius'}
+    required_names = {'Unnamed: 0.1', 'Unnamed: 0', 'id', 'city', 'floor', 'latitude',
+       'longitude', 'price', 'rooms', 'sq', 'year', 'latitude_center',
+       'longitude_center', 'decade', 'price_per_m', 'sq_round', 'radius',
+       'radius_dec', 'radius_ceil', 'district'}
+#     {'floor', 'rooms', 'city', 'district', 'radius'}
     dt.validate(grab_test_file.columns, required_names)
 # https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/intro/automated-testing.rst#L139
 
@@ -208,11 +212,11 @@ def test_2_parameter_product():
 # https://stackoverflow.com/questions/22472213/python-random-selection-per-group
 
 
-# In[17]:
+# In[12]:
 
 
 # test_df = pd.read_csv('test_file.csv')
-# test_df.shape
+# test_df.columns
 
 
 # In[ ]:
