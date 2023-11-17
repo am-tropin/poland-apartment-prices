@@ -48,9 +48,23 @@ def grab_test_file():
         return pd.read_csv(file_path)
     except FileNotFoundError:
         pytest.skip(f'cannot find {file_path}')
-
 # !!! https://datatest.readthedocs.io/en/stable/reference/data-handling.html
 # https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/discussion/tips-and-tricks.rst?plain=1#L448
+
+
+import datatest as dt
+# from datatest import (
+#                 Missing,
+#                 Extra,
+#                 Invalid,
+#                 Deviation,
+# )
+
+@pytest.mark.mandatory
+def test_column_names(df):
+    required_names = {'floor', 'rooms', 'city', 'district', 'radius'}
+    dt.validate(grab_test_file.columns, required_names)
+# https://github.com/shawnbrown/datatest/blob/bf136eab23c2b6ea36c201e1446fca9243c3fba6/docs/intro/automated-testing.rst#L139
 
 
 # In[ ]:
