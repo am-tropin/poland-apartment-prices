@@ -74,9 +74,21 @@ def test_column_names(grab_test_file):
 # In[ ]:
 
 
-def test_1_check_city_district_radius_floor_rooms():
-#     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
-    assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
+# HOW TO VALIDATE DF
+# examples:
+
+# https://github.com/fpdcc/fpcc_data_dashboard/blob/575e10a72a85617bd214906822271aa65ecced04/tests/tests.py
+# https://github.com/DSuryavamshi/jenkins-test/blob/3e697c9f202a57b64b590430b3f5310d150074b7/test_processed_movies_csv.py#L15
+
+
+
+
+# In[ ]:
+
+
+# def test_1_check_city_district_radius_floor_rooms():
+# #     assert check_city_district_radius_floor_rooms(TEST_APARTMENTS_DF, "Kraków", "Śródmieście", 2, 3, 2) is False
+#     assert check_city_district_radius_floor_rooms(grab_test_file, "Kraków", "Śródmieście", 2, 3, 2) is False
     
     
 #     assert check_city_district_radius_floor_rooms("Warszawa", "Śródmieście", 2, 3, 2)
