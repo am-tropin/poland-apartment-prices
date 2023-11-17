@@ -124,6 +124,34 @@ def test_for_33_check_year():
 
 
 
+# In[4]:
+
+
+# import itertools
+
+# def parameter_product(parameters):
+#     params_values = [parameters[key] if isinstance(parameters[key], list) else [parameters[key]] for key in parameters.keys()]
+#     return [dict(zip(parameters.keys(), combination)) for combination in itertools.product(*params_values)]
+
+# parameter_product({'1': ['a', 'd'], '2': 'b', '3': 'c'})
+
+
+# In[ ]:
+
+
+def test_1_parameter_product():
+    assert parameter_product({'1': 'a', '2': 'c'}) == [{'1': 'a', '2': 'c'}]
+
+def test_2_parameter_product():
+    assert parameter_product({'1': ['a', 'b'], '2': 'c'}) == [{'1': 'a', '2': 'c'}, {'1': 'b', '2': 'c'}]
+
+
+# In[ ]:
+
+
+
+
+
 # In[ ]:
 
 
